@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button, Modal } from 'flowbite-react';
+import { HiOutlineExclamationCircle } from "react-icons/hi"
 
 export default function MyBlog() {
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+
+  const [openModal, setOpenModal] = useState();
+  const props = { openModal, setOpenModal };
 
   useEffect(() => {
     // Fetch paginated blogs
@@ -114,7 +119,30 @@ export default function MyBlog() {
                         {article.Category.name}
                     </td>
                     <td class="px-6 py-4">
-                        <button href="#" className="px-3 py-1 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-150 ease-in" onClick={() => handleDelete(article.id)}>Delete</button>
+                    <Button onClick={() => props.setOpenModal('pop-up')}>Delete </Button>
+                    <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+                      <Modal.Header />
+                      <Modal.Body>
+                        <div className="text-center">
+                          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                            Are you sure you want to delete this blog?
+                          </h3>
+                          <div className="flex justify-center gap-4">
+                            <Button color="failure" onClick={() => handleDelete(article.id)}>
+                              Yes, I'm sure
+                            </Button>
+                            <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+                              No, cancel
+                            </Button>
+                          </div>
+                        </div>
+                      </Modal.Body>
+                    </Modal>
+                    
+
+
+                        {/* <button href="#" className="px-3 py-1 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-150 ease-in" onClick={() => handleDelete(article.id)}>Delete</button> */}
                     </td>
                   </tr> 
                 ))

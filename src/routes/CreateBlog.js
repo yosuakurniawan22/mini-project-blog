@@ -45,7 +45,7 @@ const CreateBlog = () => {
       })
   });
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     const formData = new FormData();
 
     const data = {
@@ -69,7 +69,10 @@ const CreateBlog = () => {
 
       const response = await axios.post('https://minpro-blog.purwadhikabootcamp.com/api/blog', formData, { headers });
 
-      toast.success(response.data.error)
+      console.log(response);
+
+      toast.success(response.data.message)
+      resetForm();
     } catch (error) {
       toast.error('Error posting blog data', error?.response?.message);
       console.error('Error posting blog data', error);
