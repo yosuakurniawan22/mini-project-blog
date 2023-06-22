@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
 
 export default function Navbar() {
   const location = useLocation();
@@ -15,7 +16,7 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="flex">
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-4 items-center">
               {isLoggedIn ? (
                 <>
                   <li>
@@ -65,6 +66,9 @@ export default function Navbar() {
                     >
                       Favorite Blog
                     </Link>
+                  </li>
+                  <li>
+                    <LogoutButton />
                   </li>
                 </>
               ) : (

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import ArticleCard from '../components/ArticleCard';
 
 export default function FavoriteBlog() {
   const [articles, setArticles] = useState([]);
@@ -26,8 +27,9 @@ export default function FavoriteBlog() {
     const fetchArticles = async () => {
       try {
         const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('id');
 
-        let url = `https://minpro-blog.purwadhikabootcamp.com/api/blog/pagLike?sort=${selectedSort}&page=${currentPage}`;
+        let url = `https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?UserId=${userId}?sort=${selectedSort}&page=${currentPage}`;
         if (selectedCategory) {
           url += `&id_cat=${selectedCategory}`;
         }
@@ -111,20 +113,7 @@ export default function FavoriteBlog() {
               <p className="text-gray-800">No articles found.</p>
           ) : (
             articles.map((article) => (
-              <div
-                key={article.id}
-                className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-              >
-                <div className="p-4">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {article.Blog.title}
-                  </h5>
-                  <small className="text-zinc-600">{article.createdAt}</small>
-                  <p className="my-3 font-normal text-gray-500 dark:text-gray-400">
-                    {article.Blog.content}
-                  </p>
-                </div>
-              </div>
+              <ArticleCard article={article} key={article.id} />
             ))
           )}
         </div>
