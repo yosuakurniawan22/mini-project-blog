@@ -73,7 +73,7 @@ export default function ArticleCard({ article }) {
 
         <small className="text-zinc-600">{article.createdAt}</small>
 
-        <p className="my-3 font-normal text-gray-500 dark:text-gray-400">{article.content}</p>
+        <p className="my-3 font-normal text-gray-500 dark:text-gray-400 break-words">{article.content}</p>
 
       </div>
 

@@ -57,8 +57,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen py-8">
-      <div className="w-1/3 bg-white rounded shadow-xl p-8">
+    <div className="flex justify-center items-center min-h-screen p-4 xl:p-8">
+      <div className="w-full lg:w-1/3 bg-white rounded shadow-xl p-4 xl:p-8">
         <h1 className="text-2xl font-bold mb-6">Login</h1>
         <ToastContainer />
         <Formik
