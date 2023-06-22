@@ -69,8 +69,6 @@ const CreateBlog = () => {
 
       const response = await axios.post('https://minpro-blog.purwadhikabootcamp.com/api/blog', formData, { headers });
 
-      console.log(response);
-
       toast.success(response.data.message)
       resetForm();
     } catch (error) {

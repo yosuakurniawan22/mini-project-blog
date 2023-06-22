@@ -32,7 +32,7 @@ const Register = () => {
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required('Confirm Password is required'),
       phone: Yup.string()
-      .matches(/^\d{10}$/, 'Invalid phone number')
+      .matches(/^\d{10,12}$/, 'Invalid phone number')
       .required('Phone number is required')
   });
 

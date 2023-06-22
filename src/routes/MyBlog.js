@@ -119,30 +119,26 @@ export default function MyBlog() {
                         {article.Category.name}
                     </td>
                     <td class="px-6 py-4">
-                    <Button onClick={() => props.setOpenModal('pop-up')}>Delete </Button>
-                    <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
-                      <Modal.Header />
-                      <Modal.Body>
-                        <div className="text-center">
-                          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                            Are you sure you want to delete this blog?
-                          </h3>
-                          <div className="flex justify-center gap-4">
-                            <Button color="failure" onClick={() => handleDelete(article.id)}>
-                              Yes, I'm sure
-                            </Button>
-                            <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
-                              No, cancel
-                            </Button>
+                      <Button className='bg-red-600 hover:bg-red-700' onClick={() => props.setOpenModal('pop-up')}>Delete</Button>
+                      <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+                        <Modal.Header />
+                        <Modal.Body>
+                          <div className="text-center">
+                            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                              Are you sure you want to delete this blog?
+                            </h3>
+                            <div className="flex justify-center gap-4">
+                              <Button className='bg-red-600 hover:bg-red-700' onClick={() => handleDelete(article.id)}>
+                                Yes, I'm sure
+                              </Button>
+                              <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+                                No, cancel
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      </Modal.Body>
-                    </Modal>
-                    
-
-
-                        {/* <button href="#" className="px-3 py-1 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-150 ease-in" onClick={() => handleDelete(article.id)}>Delete</button> */}
+                        </Modal.Body>
+                      </Modal>
                     </td>
                   </tr> 
                 ))

@@ -11,6 +11,7 @@ import MyBlog from './routes/MyBlog';
 import FavoriteBlog from './routes/FavoriteBlog';
 import ForgotPassword from './routes/ForgotPassword';
 import ResetPassword from './routes/ResetPassword';
+import Profile from './routes/Profile';
 
 function App() {
   return (
@@ -25,11 +26,13 @@ function App() {
           <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
           <Route path='/verification/:token' element={<Verification />} />
+          <Route path='/verification-change-email/:token' element={<Verification />} />
           <Route path='/create-blog' element={<CreateBlog />} />
           <Route path='/my-blog' element={<MyBlog />} />
           <Route path='/favorite-blog' element={<FavoriteBlog />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/reset-password/:token' element={<ResetPassword />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </Router>
 
