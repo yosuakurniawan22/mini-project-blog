@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-import Banner from '../components/Banner';
-import Article from '../components/ArticleCard';
-
-export default function Home() {
+export default function FavoriteBlog() {
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSort, setSelectedSort] = useState('DESC');
-  const [newArticles, setNewArticles] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -29,20 +25,25 @@ export default function Home() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        let url = `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=${selectedSort}&page=${currentPage}`;
+        const token = localStorage.getItem('token');
+
+        let url = `https://minpro-blog.purwadhikabootcamp.com/api/blog/pagLike?sort=${selectedSort}&page=${currentPage}`;
         if (selectedCategory) {
           url += `&id_cat=${selectedCategory}`;
         }
-        const response = await axios.get(url);
+
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        };
+
+        const response = await axios.get(url, {headers});
+
+        console.log(response);
+
         const { rows, listLimit, result } = response.data;
         setArticles(result);
         setTotalPages(Math.ceil(rows / listLimit));
-
-        const newestResponse = await axios.get(
-          'https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?sort=ASC'
-        );
-        const newestArticles = newestResponse.data.result;
-        setNewArticles(newestArticles);
       } catch (error) {
         console.error(error);
       }
@@ -67,10 +68,8 @@ export default function Home() {
 
   return (
     <main className="p-8 overflow-x-hidden">
-      <Banner articles={newArticles} />
-
       <section className="my-12">
-        <h1 className="text-3xl font-bold text-center">Daftar Artikel</h1>
+        <h1 className="text-3xl font-bold text-center">My Favorite Blog</h1>
 
         <div className="filter mt-5 flex gap-5 justify-center">
           <div>
@@ -103,13 +102,31 @@ export default function Home() {
             </select>
           </div>
         </div>
+
       </section>
 
       <section className="my-5">
         <div className="grid grid-cols-4 gap-5">
-          {articles.map((article) => (
-            <Article key={article.id} article={article} />
-          ))}
+          {articles.length === 0 ? (
+              <p className="text-gray-800">No articles found.</p>
+          ) : (
+            articles.map((article) => (
+              <div
+                key={article.id}
+                className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              >
+                <div className="p-4">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {article.Blog.title}
+                  </h5>
+                  <small className="text-zinc-600">{article.createdAt}</small>
+                  <p className="my-3 font-normal text-gray-500 dark:text-gray-400">
+                    {article.Blog.content}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
         <nav aria-label="Page navigation example">
@@ -129,5 +146,5 @@ export default function Home() {
         </nav>
       </section>
     </main>
-  );
+  )
 }

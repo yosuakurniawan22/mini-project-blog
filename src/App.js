@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Verification from './routes/Verification';
 import CreateBlog from './routes/CreateBlog';
+import MyBlog from './routes/MyBlog';
+import FavoriteBlog from './routes/FavoriteBlog';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='/verification/:token' element={<Verification />} />
           <Route path='/create-blog' element={<CreateBlog />} />
+          <Route path='/my-blog' element={<MyBlog />} />
+          <Route path='/favorite-blog' element={<FavoriteBlog />} />
         </Routes>
       </Router>
 

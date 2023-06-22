@@ -42,6 +42,7 @@ const Login = () => {
       const token = response.data.token;
 
       localStorage.setItem('token', token);
+      localStorage.setItem('id', response.data.isAccountExist.id);
 
       toast.success(response.data.message);
 
