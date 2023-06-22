@@ -4,7 +4,7 @@ import LogoutButton from './LogoutButton';
 export default function Navbar() {
   const location = useLocation();
 
-  const isLoggedIn = localStorage.getItem('token') !== null;
+  const isLoggedIn = localStorage.getItem('token') && localStorage.getItem('id') !== null;
 
   return (
     <nav className="bg-gray-800">

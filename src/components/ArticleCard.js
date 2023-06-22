@@ -5,7 +5,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 export default function ArticleCard({ article }) {
   const [liked, setLiked] = useState(false); 
 
-  const isLoggedIn = localStorage.getItem('token') !== null;
+  const isLoggedIn = localStorage.getItem('token') && localStorage.getItem('id') !== null;
 
   useEffect(() => {
     const fetchLikeStatus = async () => {
