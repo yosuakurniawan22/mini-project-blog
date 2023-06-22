@@ -2,7 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const location = useLocation();
-  const isLoggedIn = false; // Replace with your actual login state
+
+  const isLoggedIn = localStorage.getItem('token') !== null;
 
   return (
     <nav className="bg-gray-800">
@@ -16,18 +17,34 @@ export default function Navbar() {
           <div className="flex">
             <ul className="flex space-x-4">
               {isLoggedIn ? (
-                <li>
-                  <Link
-                    to="/profile"
-                    className={`${
-                      location.pathname === '/profile'
-                        ? 'text-white bg-gray-900'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                    } px-3 py-2 rounded-md text-sm font-medium`}
-                  >
-                    My Profile
-                  </Link>
-                </li>
+                <>
+                  <li>
+                    <Link
+                      to="/profile"
+                      className={`${
+                        location.pathname === '/profile'
+                          ? 'text-white bg-gray-900'
+                          : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                      } px-3 py-2 rounded-md text-sm font-medium`}
+                    >
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/create-blog"
+                      className={`${
+                        location.pathname === '/create-blog'
+                          ? 'text-white bg-gray-900'
+                          : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                      } px-3 py-2 rounded-md text-sm font-medium`}
+                    >
+                      Create Blog
+                    </Link>
+                  </li>
+                </>
+
+                
               ) : (
                 <>
                   <li>

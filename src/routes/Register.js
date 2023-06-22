@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
 
   const initialValues = {
     username: '',
@@ -43,9 +42,6 @@ const Register = () => {
       toast.success(response.data.message);
 
       resetForm();
-
-      const token = response.data.token;
-      navigate(`/verification/${token}`);
     } catch (error) {
       if(error.response) {
         const { data } = error.response;

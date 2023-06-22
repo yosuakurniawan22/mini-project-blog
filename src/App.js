@@ -6,6 +6,7 @@ import Login from './routes/Login';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Verification from './routes/Verification';
+import CreateBlog from './routes/CreateBlog';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
           <Route path='/verification/:token' element={<Verification />} />
+          <Route path='/create-blog' element={<CreateBlog />} />
         </Routes>
       </Router>
 

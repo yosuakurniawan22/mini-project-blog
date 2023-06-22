@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const initialValues = {
     identifier: '',
@@ -38,7 +39,13 @@ const Login = () => {
         body
       );
 
+      const token = response.data.token;
+
+      localStorage.setItem('token', token);
+
       toast.success(response.data.message);
+
+      navigate('/');
     } catch (error) {
       toast.error(error.response.data.err);
     }
