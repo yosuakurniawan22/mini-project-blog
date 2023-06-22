@@ -1,24 +1,13 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 const Auth = ({ children }) => {
-  const [isAuthenticate, setIsAuthenticate] = useState(false);
+  const isLoggedIn = localStorage.getItem('token') && localStorage.getItem('id') !== null;
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (localStorage.getItem("token") && localStorage.getItem('id')) {
-        setIsAuthenticate(true);
-      } else {
-        setIsAuthenticate(false);
-      }
-    }, 2000);
-  }, []);
-
-  if (isAuthenticate === undefined) {
+  if (isLoggedIn === undefined) {
     return null;
   }
 
-  if (!isAuthenticate) {
+  if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
 
