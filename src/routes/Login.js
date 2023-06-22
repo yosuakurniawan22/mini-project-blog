@@ -107,6 +107,10 @@ const Login = () => {
               />
             </div>
 
+            <p className='text-gray-500'><Link to="/forgot-password" className='text-gray-600 hover:text-gray-700 hover:underline'>Forgot Password</Link></p>
+
+            <hr className='my-2' />
+
             <p className='text-gray-500'>Doesn't have Account? <Link to="/register" className='font-bold text-gray-600 hover:text-gray-700'>Register</Link></p>
 
             <button

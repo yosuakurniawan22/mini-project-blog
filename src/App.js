@@ -9,6 +9,7 @@ import Verification from './routes/Verification';
 import CreateBlog from './routes/CreateBlog';
 import MyBlog from './routes/MyBlog';
 import FavoriteBlog from './routes/FavoriteBlog';
+import ForgotPassword from './routes/ForgotPassword';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path='/create-blog' element={<CreateBlog />} />
           <Route path='/my-blog' element={<MyBlog />} />
           <Route path='/favorite-blog' element={<FavoriteBlog />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
         </Routes>
       </Router>
 
