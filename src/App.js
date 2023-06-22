@@ -12,6 +12,10 @@ import FavoriteBlog from './routes/FavoriteBlog';
 import ForgotPassword from './routes/ForgotPassword';
 import ResetPassword from './routes/ResetPassword';
 import Profile from './routes/Profile';
+import ChangePassword from './routes/ChangePassword';
+import Auth from './Auth';
+
+
 
 function App() {
   return (
@@ -22,17 +26,21 @@ function App() {
         
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='*' element={<ErrorPage />} />
           <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
           <Route path='/verification/:token' element={<Verification />} />
           <Route path='/verification-change-email/:token' element={<Verification />} />
-          <Route path='/create-blog' element={<CreateBlog />} />
-          <Route path='/my-blog' element={<MyBlog />} />
-          <Route path='/favorite-blog' element={<FavoriteBlog />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/reset-password/:token' element={<ResetPassword />} />
-          <Route path='/profile' element={<Profile />} />
+      
+          
+          <Route path='/create-blog' element={<Auth><CreateBlog /></Auth>} />
+          <Route path='/my-blog' element={<Auth><MyBlog /></Auth>} />
+          <Route path='/favorite-blog' element={<Auth><FavoriteBlog /></Auth>} />
+          <Route path='/profile' element={<Auth><Profile /></Auth>} />
+          <Route path='/change-password' element={<Auth><ChangePassword /></Auth>} />
+
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Router>
 
