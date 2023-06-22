@@ -26,10 +26,6 @@ export default function ForgotPassword() {
         { email: values.email }
       );
 
-      const token = response.data.token;
-
-      localStorage.setItem('token', token);
-  
       setLoading(false);
       toast.success(response.data.message);
       resetForm();

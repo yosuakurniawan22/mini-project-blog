@@ -10,6 +10,7 @@ import CreateBlog from './routes/CreateBlog';
 import MyBlog from './routes/MyBlog';
 import FavoriteBlog from './routes/FavoriteBlog';
 import ForgotPassword from './routes/ForgotPassword';
+import ResetPassword from './routes/ResetPassword';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='/my-blog' element={<MyBlog />} />
           <Route path='/favorite-blog' element={<FavoriteBlog />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password/:token' element={<ResetPassword />} />
         </Routes>
       </Router>
 
