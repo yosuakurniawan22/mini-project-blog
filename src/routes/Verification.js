@@ -9,7 +9,7 @@ const Verification = () => {
 
   const handleVerify = async () => {
     try {
-      await axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/verify', null, {
+      await axios.patch(`${process.env.REACT_APP_API_URL}/auth/verify`, null, {
         headers: {
           Authorization: `Bearer ${token}`
         }

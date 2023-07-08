@@ -13,7 +13,7 @@ export default function FavoriteBlog() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://minpro-blog.purwadhikabootcamp.com/api/blog/allCategory');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/allCategory`);
         setCategories(response.data);
       } catch (error) {
         console.error(error);

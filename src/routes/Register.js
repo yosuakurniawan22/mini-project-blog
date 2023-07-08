@@ -38,14 +38,17 @@ const Register = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const response = await axios.post('https://minpro-blog.purwadhikabootcamp.com/api/auth/', values);
+      const feUrl = process.env.REACT_APP_PUBLIC_URL;
+      values.FE_URL = feUrl;
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth`, values);
       toast.success(response.data.message);
 
       resetForm();
+
+
     } catch (error) {
-      if(error.response) {
-        const { data } = error.response;
-        toast.error(data);
+      if(error.response.data) {
+        toast.error(error.response.data.message);
       }
     }
   };

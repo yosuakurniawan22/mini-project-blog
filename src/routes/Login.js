@@ -35,20 +35,21 @@ const Login = () => {
       };
 
       const response = await axios.post(
-        'https://minpro-blog.purwadhikabootcamp.com/api/auth/login',
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         body
       );
 
-      const token = response.data.token;
+      const token = response.data.data.token;
 
       localStorage.setItem('token', token);
-      localStorage.setItem('id', response.data.isAccountExist.id);
+      // localStorage.setItem('id', response.data.isAccountExist.id);
+      localStorage.setItem('id', response.data.data.id);
 
       toast.success(response.data.message);
 
       navigate('/');
     } catch (error) {
-      toast.error(error.response.data.err);
+      toast.error(error.response.data.message);
     }
   };
 
