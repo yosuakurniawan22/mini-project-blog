@@ -24,7 +24,7 @@ export default function MyBlog() {
         };
 
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/blog/auth?id_cat=3&sort=ASC&page=${currentPage}`,
+          `${process.env.REACT_APP_API_URL}/blog/auth?sort=ASC&page=${currentPage}`,
           { headers }
         );
         const userId = localStorage.getItem('id');
@@ -54,12 +54,27 @@ export default function MyBlog() {
         Authorization: `Bearer ${token}`
       };
 
-      await axios.patch(`${process.env.REACT_APP_API_URL}/blog/remove/${id}`, { headers });
+      await axios.patch(`${process.env.REACT_APP_API_URL}/blog/remove/${id}`, {}, { headers });
 
+      // fetch blogs again
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/blog/auth?sort=ASC&page=${currentPage}`,
+        { headers }
+      );
+
+      const userId = localStorage.getItem('id');
+      const { result, rows } = response.data;
+      const filteredArticles = result.filter((article) => article.UserId === Number(userId));
+
+      setArticles(filteredArticles);
+      setTotalPages(Math.ceil(rows / 8)); // Assuming the listLimit is 8
+
+      // If using modal
+      // props.setOpenModal(undefined);
       setCurrentPage(1);
       toast.success('Blog berhasil dihapus');
     } catch (error) {
-      console.error('Error deleting blog', error);
+      console.log('Error deleting blog', error);
       toast.error(error.response.data.message);
     }
   }
@@ -71,26 +86,26 @@ export default function MyBlog() {
       </section>
 
       <ToastContainer />
-      
+
       <section className='my-5'>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="px-6 py-3">
-                    Image
+                <th scope="col" className="px-6 py-3">
+                  Image
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Title
+                <th scope="col" className="px-6 py-3">
+                  Title
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Content
+                <th scope="col" className="px-6 py-3">
+                  Content
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Category
+                <th scope="col" className="px-6 py-3">
+                  Category
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Action
+                <th scope="col" className="px-6 py-3">
+                  Action
                 </th>
               </tr>
             </thead>
@@ -101,7 +116,7 @@ export default function MyBlog() {
                 </tr>
               ) : (
                 articles.map((article) => (
-                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                  <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" key={article.id}>
                     <td className='px-6 py-4 w-40'>
                       <img
                         className="rounded-t-lg h-28 w-28 object-cover"
@@ -109,18 +124,19 @@ export default function MyBlog() {
                         alt={article.title}
                       />
                     </td>
-                    <td class="px-6 py-4 text-black">
-                        {article.title}
+                    <td className="px-6 py-4 text-black">
+                      {article.title}
                     </td>
-                    <td class="px-6 py-4">
-                        {article.content}
+                    <td className="px-6 py-4">
+                      {article.content}
                     </td>
-                    <td class="px-6 py-4">
-                        {article.Category.name}
+                    <td className="px-6 py-4">
+                      {article.Category.name}
                     </td>
-                    <td class="px-6 py-4">
-                      <Button className='bg-red-600 hover:bg-red-700' onClick={() => props.setOpenModal('pop-up')}>Delete</Button>
-                      <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+                    <td className="px-6 py-4">
+                      <Button className='bg-red-600 hover:bg-red-700' onClick={() => handleDelete(article.id)}>Delete</Button>
+                      {/* <Button className='bg-red-600 hover:bg-red-700' onClick={() => props.setOpenModal('pop-up')}>Delete</Button> */}
+                      {/* <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
                         <Modal.Header />
                         <Modal.Body>
                           <div className="text-center">
@@ -138,24 +154,23 @@ export default function MyBlog() {
                             </div>
                           </div>
                         </Modal.Body>
-                      </Modal>
+                      </Modal> */}
                     </td>
-                  </tr> 
+                  </tr>
                 ))
               )}
             </tbody>
           </table>
         </div>
-    
+
         <nav aria-label="Page navigation example">
           <ul className="inline-flex -space-x-px mt-4">
             {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
               <button
                 key={page}
                 onClick={() => handlePageChange(page)}
-                className={`${
-                  currentPage === page ? 'font-bold' : ''
-                } px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                className={`${currentPage === page ? 'font-bold' : ''
+                  } px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 {page}
               </button>

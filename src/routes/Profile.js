@@ -34,7 +34,7 @@ const Profile = () => {
 
   // get initial letter from username
   let initial = profileData.username && profileData.username.charAt(0).toUpperCase();
-  
+
   const initialValues = {
     username: profileData.username || '',
     email: profileData.email || '',
@@ -63,7 +63,7 @@ const Profile = () => {
         Authorization: `Bearer ${token}`
       };
 
-      if(values.file) {
+      if (values.file) {
         const formData = new FormData();
         formData.append('file', values.file);
 
@@ -72,7 +72,7 @@ const Profile = () => {
           Authorization: `Bearer ${token}`
         };
 
-       await axios.post(`${process.env.REACT_APP_API_URL}/profile/single-uploaded`, formData, { headers });
+        await axios.post(`${process.env.REACT_APP_API_URL}/profile/single-uploaded`, formData, { headers });
 
         toast.success("Foto berhasil diubah");
       }
@@ -94,6 +94,7 @@ const Profile = () => {
 
       if (values.email && values.email !== '') {
         const response = await axios.patch(`${process.env.REACT_APP_API_URL}/auth/changeEmail`, {
+          FE_URL: process.env.REACT_APP_PUBLIC_URL,
           currentEmail: profileData.email,
           newEmail: values.email
         }, { headers });
@@ -122,7 +123,7 @@ const Profile = () => {
         }, 1500)
       }
 
-      
+
     } catch (error) {
       if (error.response) {
         toast.error(error.response.data.message);
@@ -135,7 +136,7 @@ const Profile = () => {
       <h1 className="text-2xl font-bold mb-4">Change Profile</h1>
 
       <ToastContainer />
-      
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
