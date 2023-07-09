@@ -10,6 +10,7 @@ export default function MyBlog() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
+
   const [openModal, setOpenModal] = useState();
   const props = { openModal, setOpenModal };
 
@@ -23,8 +24,10 @@ export default function MyBlog() {
           Authorization: `Bearer ${token}`
         };
 
+        let url = `${process.env.REACT_APP_API_URL}/blog/auth?sort=ASC&page=${currentPage}`;
+
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/blog/auth?sort=ASC&page=${currentPage}`,
+          url,
           { headers }
         );
         const userId = localStorage.getItem('id');
