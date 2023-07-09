@@ -22,15 +22,15 @@ export default function ForgotPassword() {
       setLoading(true);
 
       const response = await axios.put(
-        'https://minpro-blog.purwadhikabootcamp.com/api/auth/forgotPass',
-        { email: values.email }
+        `${process.env.REACT_APP_API_URL}/auth/forgotPass`,
+        { email: values.email, FE_URL: process.env.REACT_APP_PUBLIC_URL }
       );
 
       setLoading(false);
       toast.success(response.data.message);
       resetForm();
     } catch (error) {
-      toast.error(error.response.data.err);
+      toast.error(error.response.data.message);
     }
   };
 

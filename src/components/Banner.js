@@ -21,7 +21,7 @@ export default function Banner({ articles }) {
         {articles.map((article) => (
           <div key={article.id}>
             <img
-              src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
+              src={`${process.env.REACT_APP_API_PUBLIC_URL}${article.imageURL}`}
               alt={article.title}
               className="w-full h-96 object-cover relative"
             />

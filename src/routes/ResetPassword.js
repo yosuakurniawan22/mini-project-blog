@@ -33,7 +33,7 @@ export default function ResetPassword () {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const response = await axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/resetPass', {
+      const response = await axios.patch(`${process.env.REACT_APP_API_URL}/auth/resetPass`, {
         password: values.password,
         confirmPassword: values.confirmPassword
       }, {
@@ -48,7 +48,7 @@ export default function ResetPassword () {
         navigate('/login');
       }, 1500)
     } catch (error) {
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   };
 

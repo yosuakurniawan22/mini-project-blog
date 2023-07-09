@@ -42,7 +42,6 @@ const Login = () => {
       const token = response.data.data.token;
 
       localStorage.setItem('token', token);
-      // localStorage.setItem('id', response.data.isAccountExist.id);
       localStorage.setItem('id', response.data.data.id);
 
       toast.success(response.data.message);

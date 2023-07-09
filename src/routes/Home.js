@@ -18,6 +18,7 @@ export default function Home() {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/allCategory`);
         setCategories(response.data.data);
+        // setCategories(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -29,7 +30,7 @@ export default function Home() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        let url = `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=${selectedSort}&page=${currentPage}`;
+        let url = `${process.env.REACT_APP_API_URL}/blog?sort=${selectedSort}&page=${currentPage}`;
         if (selectedCategory) {
           url += `&id_cat=${selectedCategory}`;
         }
@@ -39,7 +40,7 @@ export default function Home() {
         setTotalPages(Math.ceil(rows / listLimit));
 
         const newestResponse = await axios.get(
-          'https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?sort=ASC'
+          `${process.env.REACT_APP_API_URL}/blog/pagFav?sort=ASC`
         );
         const newestArticles = newestResponse.data.result;
         setNewArticles(newestArticles);

@@ -8,6 +8,8 @@ export default function ArticleCard({ article }) {
   const isLoggedIn = localStorage.getItem('token') && localStorage.getItem('id') !== null;
 
   useEffect(() => {
+    // if there is no token dont fetch liked articles
+    if (!isLoggedIn) return;
     const fetchLikeStatus = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -17,9 +19,9 @@ export default function ArticleCard({ article }) {
           Authorization: `Bearer ${token}`
         };
 
-        const response = await axios.get('https://minpro-blog.purwadhikabootcamp.com/api/blog/pagLike', { headers });
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/pagLike`, { headers });
 
-        const likedArticles = response.data.result; 
+        const likedArticles = response.data.result;
 
         const isLiked = likedArticles.some((likedArticle) => likedArticle.BlogId === article.id);
 
@@ -34,19 +36,36 @@ export default function ArticleCard({ article }) {
 
 
   const handleLike = async () => {
-    try {
-      const token = localStorage.getItem('token');
+    if (!liked) {
+      try {
+        const token = localStorage.getItem('token');
 
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      };
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        };
 
-      await axios.post('https://minpro-blog.purwadhikabootcamp.com/api/blog/like', { BlogId: article.id }, { headers });
+        await axios.post(`${process.env.REACT_APP_API_URL}/blog/like`, {BlogId: article.id}, {headers});
 
-      setLiked(true);
-    } catch (error) {
-      console.error('Error liking the article', error);
+        setLiked(true);
+      } catch (error) {
+        console.error('Error liking the article', error.response.data.message);
+      }
+    } else {
+        try {
+            const token = localStorage.getItem('token');
+
+            const headers = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+            };
+
+            await axios.delete(`${process.env.REACT_APP_API_URL}/blog/unlike/${article.id}`, {headers});
+
+            setLiked(false);
+        } catch (error) {
+            console.error('Error unliking the article', error.response.data.message);
+        }
     }
   };
 
@@ -54,7 +73,7 @@ export default function ArticleCard({ article }) {
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
       <img
         className="rounded-t-lg h-52 w-full object-cover"
-        src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
+        src={`${process.env.REACT_APP_API_PUBLIC_URL}${article.imageURL}`}
         alt={article.title}
       />
 

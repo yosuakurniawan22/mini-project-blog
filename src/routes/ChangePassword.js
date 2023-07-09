@@ -36,7 +36,7 @@ export default function ChangePassword () {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/changePass', {
+      const response = await axios.patch(`${process.env.REACT_APP_API_URL}/auth/changePass`, {
         currentPassword: values.oldPassword,
         password: values.password,
         confirmPassword: values.confirmPassword
@@ -54,8 +54,7 @@ export default function ChangePassword () {
         navigate('/login');
       }, 1500)
     } catch (error) {
-      toast.error(error.response.data.err);
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 

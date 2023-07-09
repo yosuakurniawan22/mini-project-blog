@@ -21,16 +21,19 @@ const Profile = () => {
           Authorization: `Bearer ${token}`
         };
 
-        const response = await axios.get('https://minpro-blog.purwadhikabootcamp.com/api/auth/', { headers });
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/auth/`, { headers });
 
-        setProfileData(response.data);
+        setProfileData(response.data.data);
       } catch (error) {
-        console.error(error);
+        toast.error(error.response.data.message);
       }
     };
 
     fetchProfileData();
   }, []);
+
+  // get initial letter from username
+  let initial = profileData.username && profileData.username.charAt(0).toUpperCase();
   
   const initialValues = {
     username: profileData.username || '',
@@ -69,13 +72,13 @@ const Profile = () => {
           Authorization: `Bearer ${token}`
         };
 
-       await axios.post('https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded', formData, { headers });
+       await axios.post(`${process.env.REACT_APP_API_URL}/profile/single-uploaded`, formData, { headers });
 
         toast.success("Foto berhasil diubah");
       }
 
       if (values.username && values.username !== '') {
-        const response = await axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/changeUsername', {
+        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/auth/changeUsername`, {
           currentUsername: profileData.username,
           newUsername: values.username
         }, { headers });
@@ -90,7 +93,7 @@ const Profile = () => {
       }
 
       if (values.email && values.email !== '') {
-        const response = await axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/changeEmail', {
+        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/auth/changeEmail`, {
           currentEmail: profileData.email,
           newEmail: values.email
         }, { headers });
@@ -105,7 +108,7 @@ const Profile = () => {
       }
 
       if (values.phone && values.phone !== '') {
-        const response = await axios.patch('https://minpro-blog.purwadhikabootcamp.com/api/auth/changePhone', {
+        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/auth/changePhone`, {
           currentPhone: profileData.phone,
           newPhone: values.phone
         }, { headers });
@@ -122,8 +125,7 @@ const Profile = () => {
       
     } catch (error) {
       if (error.response) {
-        const { data } = error.response;
-        toast.error(data);
+        toast.error(error.response.data.message);
       }
     }
   };
@@ -142,7 +144,7 @@ const Profile = () => {
         {({ values, setFieldValue }) => (
           <Form>
             <div className='mb-4 text-center'>
-              <img src={`https://minpro-blog.purwadhikabootcamp.com/${profileData.imgProfile}`} alt={profileData.username} className='h-28 w-28 border-2 border-violet-700 rounded-full object-cover mx-auto' />
+              <img src={profileData.imgProfile !== "" && profileData.imgProfile !== undefined && profileData.imgProfile !== null ? `${process.env.REACT_APP_API_PUBLIC_URL}${profileData.imgProfile}` : `https://dummyimage.com/1000x1000/000/fff&text=${initial}`} alt={profileData.username} className='h-28 w-28 border-2 border-violet-700 rounded-full object-cover mx-auto' />
 
               <input
                 type="file"

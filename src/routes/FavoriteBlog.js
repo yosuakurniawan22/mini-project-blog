@@ -14,7 +14,8 @@ export default function FavoriteBlog() {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/allCategory`);
-        setCategories(response.data);
+        setCategories(response.data.data);
+        // setCategories(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -29,7 +30,7 @@ export default function FavoriteBlog() {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('id');
 
-        let url = `https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?UserId=${userId}?sort=${selectedSort}&page=${currentPage}`;
+        let url = `${process.env.REACT_APP_API_URL}/blog/pagFav?UserId=${userId}sort=${selectedSort}&page=${currentPage}`;
         if (selectedCategory) {
           url += `&id_cat=${selectedCategory}`;
         }

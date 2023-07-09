@@ -11,10 +11,11 @@ const CreateBlog = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://minpro-blog.purwadhikabootcamp.com/api/blog/allCategory');
-        setCategories(response.data);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/allCategory`);
+        setCategories(response.data.data);
+        // setCategories(response.data);
       } catch (error) {
-        console.error(error);
+        console.error(error.response.data.message);
       }
     };
 
@@ -67,13 +68,13 @@ const CreateBlog = () => {
         Authorization: `Bearer ${token}`
       };
 
-      const response = await axios.post('https://minpro-blog.purwadhikabootcamp.com/api/blog', formData, { headers });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/blog`, formData, { headers });
 
       toast.success(response.data.message)
       resetForm();
     } catch (error) {
-      toast.error('Error posting blog data', error?.response?.message);
-      console.error('Error posting blog data', error);
+      toast.error('Error posting blog data', error?.response?.data?.message);
+      console.error('Error posting blog data', error?.response?.data?.message);
     }
 
   };

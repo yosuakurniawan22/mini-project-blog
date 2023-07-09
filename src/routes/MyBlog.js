@@ -24,7 +24,7 @@ export default function MyBlog() {
         };
 
         const response = await axios.get(
-          `https://minpro-blog.purwadhikabootcamp.com/api/blog?id_cat=3&sort=ASC&page=${currentPage}`,
+          `${process.env.REACT_APP_API_URL}/blog/auth?id_cat=3&sort=ASC&page=${currentPage}`,
           { headers }
         );
         const userId = localStorage.getItem('id');
@@ -54,13 +54,13 @@ export default function MyBlog() {
         Authorization: `Bearer ${token}`
       };
 
-      await axios.patch(`https://minpro-blog.purwadhikabootcamp.com/api/blog/remove/${id}`, { headers });
+      await axios.patch(`${process.env.REACT_APP_API_URL}/blog/remove/${id}`, { headers });
 
       setCurrentPage(1);
       toast.success('Blog berhasil dihapus');
     } catch (error) {
       console.error('Error deleting blog', error);
-      toast.error(error.response.data);
+      toast.error(error.response.data.message);
     }
   }
 
@@ -105,7 +105,7 @@ export default function MyBlog() {
                     <td className='px-6 py-4 w-40'>
                       <img
                         className="rounded-t-lg h-28 w-28 object-cover"
-                        src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
+                        src={`${process.env.REACT_APP_API_PUBLIC_URL}${article.imageURL}`}
                         alt={article.title}
                       />
                     </td>
